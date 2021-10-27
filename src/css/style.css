@@ -16,9 +16,10 @@
     margin-right: -400px;
     margin-bottom: 5em;
     border-radius: 8px;
-    border: 1px solid #dadce0;
+    border: 1px solid #b2b2b4;
+    /* border: 1px solid #dadce0; */
     transition: delay 0.5s;
-    transition: width 1s;
+    transition: width 0.5s;
 }
 .img{
     margin-left: 5%;
@@ -46,14 +47,14 @@
         /* margin-right: 25em;*/
         margin-bottom: 5em;
         border-radius: 8px;
-        border: 1px solid #dadce0;
+        border: 1px solid #b2b2b4;
         transition: width 0.5s;
     }
     .img{
         margin-left: 5%;
         margin-right: 5%;
         display: none;
-        transition: delay 2s;
+        transition: delay 1s;
         transition: width 1s;
     }
     }

@@ -1,6 +1,6 @@
 import React from "react";
 import "../css/style.css";
-import accounts from "../assets/accounts.PNG"
+import accounts from "../assets/accounts.PNG";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -8,121 +8,156 @@ import TextField from "@mui/material/TextField";
 import InputAdornment from "@mui/material/InputAdornment";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
-import Link from "@mui/material/Link";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
 
-export class Registration extends React.Component {
-  render() {
-    return (
-      <div className="imgBox">
-        <div className="outerBox">
-          <div className="outerPadding">
-            <div>
-              <span className="fundooNotesRainbow">FundooNotes</span>
-            </div>
-            <div className="createAccountDiv">
-              <span className="createAccount">Create your Note Account</span>
-            </div>
-            <form>
-              <div className="innerImg">
-                <div className="inputBox">
-                  <div className="firstAndLast">
-                    <div className="firstName">
-                      <TextField
-                        required
-                        className="firstNameBox"
-                        label="First name"
-                        variant="outlined"
-                        size="small"
-                      />
-                    </div>
-                    <div className="lastName">
-                      <TextField
-                        required
-                        className="lastNameBox"
-                        label="Last name"
-                        variant="outlined"
-                        size="small"
-                      />
-                    </div>
-                  </div>
-                  <div className="emailId">
+
+
+export default function Registration() {
+  const [values, setValues] = React.useState({
+    amount: "",
+    password1: "",
+    password2: "",
+    weight: "",
+    weightRange: "",
+    showPassword: false,
+  });
+
+  const handleChange = (prop) => (event) => {
+    setValues({ ...values, [prop]: event.target.value });
+  };
+
+  const handleClickShowPassword = () => {
+    setValues({
+      ...values,
+      showPassword: !values.showPassword,
+    });
+  };
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
+  //   render(){
+  return (
+    <div className="imgBox">
+      <div className="outerBox">
+        <div className="outerPadding">
+          <div>
+            <span className="fundooNotesRainbow">FundooNotes</span>
+          </div>
+          <div className="createAccountDiv">
+            <span className="createAccount">
+              Create your Fundoo Notes Account
+            </span>
+          </div>
+          <form>
+            <div className="innerImg">
+              <div className="inputBox">
+                <div className="firstAndLast">
+                  <div className="firstName">
                     <TextField
-                      helperText="You can enter letters, numbers and periods"
                       required
-                      className="emailIdBox"
-                      fullWidth
-                      label="Email Id"
+                      className="firstNameBox"
+                      label="First name"
+                      variant="outlined"
                       size="small"
-                      autoComplete="email"
-                      placeholder="abc.123@example.com"
-                      //   InputProps={{endAdornment: <InputAdornment position="end">@example.com</InputAdornment>}}
                     />
                   </div>
-                  <div className="password">
-                    <div className="firstPassword">
-                      <TextField
-                        type="password"
-                        required
-                        className="firstPasswordBox"
-                        label="Password"
-                        variant="outlined"
-                        size="small"
-                      />
-                    </div>
-                    <div className="confirm">
-                      <TextField
-                        type="password"
-                        required
-                        className="confirmBox"
-                        label="Confirm"
-                        variant="outlined"
-                        size="small"
-                      />
-                    </div>
-                  </div>
-                  <div className="passwordInfo">
-                    <span>
-                      Use 8 or more characters with a mix of letters, numbers &
-                      symbols
-                    </span>
-                  </div>
-                  <div className="showPasswordMsg">
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          value="allowExtraEmails"
-                          color="primary" /*onClick={myFunction(confirm)}*/
-                        />
-                      }
-                      label={
-                        <Typography style={{ fontSize: "14px" }}>
-                          Show password
-                        </Typography>
-                      }
+                  <div className="lastName">
+                    <TextField
+                      required
+                      className="lastNameBox"
+                      label="Last name"
+                      variant="outlined"
+                      size="small"
                     />
-                  </div>
-                  <div className="signInSignUp">
-                    <div className="signIn">
-                      <span>Sign in instead</span>
-                    </div>
-                    <div className="signUp">
-                      <Button variant="contained">Sign Up</Button>
-                    </div>
                   </div>
                 </div>
-                <div className="img">
-                      <img src={accounts} width={260} height={244} style={{verticalAlign: 'middle'}}/>
+                <div className="emailId">
+                  <TextField
+                    helperText="You can enter letters, numbers and periods"
+                    required
+                    className="emailIdBox"
+                    fullWidth
+                    label="Email Id"
+                    size="small"
+                    autoComplete="email"
+                    placeholder="abc.123@example.com"
+                    //   InputProps={{endAdornment: <InputAdornment position="end">@example.com</InputAdornment>}}
+                  />
+                </div>
+                <div className="password">
+                  <div className="firstPassword">
+                    <TextField
+                      required
+                      className="firstPasswordBox"
+                      label="Password"
+                      variant="outlined"
+                      size="small"
+                      variant="outlined"
+                      size="small"
+                      type={values.showPassword ? "text" : "password"}
+                      value={values.password1}
+                      onChange={handleChange("password1")}
+                    />
+                  </div>
+                  <div className="confirm">
+                    <TextField
+                      // type="password"
+                      required
+                      className="confirmBox"
+                      label="Confirm"
+                      variant="outlined"
+                      size="small"
+                      type={values.showPassword ? "text" : "password"}
+                      value={values.password2}
+                      onChange={handleChange("password2")}
+                    />
+                  </div>
+                </div>
+                <div className="passwordInfo">
+                  <span>
+                    Use 8 or more characters with a mix of letters, numbers &
+                    symbols
+                  </span>
+                </div>
+                <div className="showPasswordMsg">
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        value="allowExtraEmails"
+                        color="primary" /*onClick={myFunction(confirm)}*/
+                        onClick={handleClickShowPassword}
+                        onMouseDown={handleMouseDownPassword}
+                     / >
+                    }
+                    label={
+                      <Typography style={{ fontSize: "14px" }}>
+                        Show password
+                      </Typography>
+                    }
+                  />
+                </div>
+                <div className="signInSignUp">
+                  <div className="signIn">
+                    <span>Sign in instead</span>
+                  </div>
+                  <div className="signUp">
+                    <Button variant="contained">Sign Up</Button>
+                  </div>
                 </div>
               </div>
-            </form>
-          </div>
+              <div className="img">
+                <img
+                  src={accounts}
+                  width={260}
+                  height={244}
+                  style={{ verticalAlign: "middle" }}
+                />
+              </div>
+            </div>
+          </form>
         </div>
       </div>
-    );
-  }
+    </div>
+  );
 }
