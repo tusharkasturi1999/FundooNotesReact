@@ -191,3 +191,30 @@
   margin-left: auto;
   margin-right: 0;
 }
+
+a:link {
+    text-decoration: none;
+  }
+  
+  a:visited {
+    text-decoration: none;
+  }
+
+  a:link {
+    color: #1a73e8;
+  }
+  
+  /* visited link */
+  a:visited {
+    color: #1a73e8;
+  }
+  
+  /* mouse over link */
+  a:hover {
+    color: #1a73e8;
+  }
+  
+  /* selected link */
+  a:active {
+    color: #1a73e8;
+  }

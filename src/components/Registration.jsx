@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "../css/style.css";
 import accounts from "../assets/accounts.PNG";
 import Avatar from "@mui/material/Avatar";
@@ -9,29 +9,108 @@ import InputAdornment from "@mui/material/InputAdornment";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import Typography from "@mui/material/Typography";
-
-
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import IconButton from "@mui/material/IconButton";
+import FormControl from "@mui/material/FormControl";
+import InputLabel from "@mui/material/InputLabel";
+import OutlinedInput from "@mui/material/OutlinedInput";
+import {
+  validPassword,
+  validEmail,
+  validFirstName,
+  validLastName,
+} from "../validation/formValidation";
 
 export default function Registration() {
   const [values, setValues] = React.useState({
-    amount: "",
-    password1: "",
-    password2: "",
-    weight: "",
-    weightRange: "",
+    password: "",
+    confirmPassword: "",
     showPassword: false,
+    showConfirmPassword: false,
+    checkTick: true,
   });
+
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [firstNameError, setFirstNameError] = useState(false);
+  const [lastNameError, setLastNameError] = useState(false);
+  const [emailError, setEmailError] = useState(false);
+  const [passwordError, setPasswordError] = useState(false);
+  const [confirmPasswordError, setPasswordConfirmError] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleChange = (prop) => (event) => {
     setValues({ ...values, [prop]: event.target.value });
   };
 
-  const handleClickShowPassword = () => {
+    const handleSubmit = (e) => {
+    e.preventDefault();
+    setFirstNameError(false);
+    setLastNameError(false);
+    setEmailError(false);
+    setPasswordError(false);
+    setPasswordConfirmError(false);
+    if (!validFirstName.test(firstName)) setFirstNameError(true);
+    if (!validLastName.test(lastName)) setLastNameError(true);
+    if (!validEmail.test(email)) setEmailError(true);
+    if (!validPassword.test(password)) setPasswordError(true);
+    if (password !== confirmPassword) {
+      setPasswordConfirmError(true);
+    }
+  };
+
+  //   useEffect(() => {
+
+  //   });
+
+  const handleClickShowPasswordBoth = (event) => {
+    console.log("Event Clicked, CheckTick:", values.checkTick);
+    //   let isShowPasswordChecked=event.target.checked
     setValues({
       ...values,
-      showPassword: !values.showPassword,
+      checkTick: !values.checkTick,
     });
+    console.log("Value after SetValue, CheckTick:", values.checkTick);
+    // let isShowPasswordChecked=event.target.checked
+
+    if (values.checkTick === true) {
+      setValues({
+        ...values,
+        showPassword: true,
+        showConfirmPassword: true,
+        // checkTick: isShowPasswordChecked,
+      });
+    }
+
+    if (values.checkTick === false) {
+      setValues({
+        ...values,
+        showPassword: "false",
+        showConfirmPassword: "false",
+        // checkTick: isShowPasswordChecked,
+      });
+    }
   };
+
+  const handleClickShowPassword =() =>{
+    setValues({
+        ...values,
+        showPassword: !values.showPassword,
+        // checkTick: isShowPasswordChecked,
+      });
+    }
+
+  const handleClickShowConfirmPassword =() =>{
+    setValues({
+        ...values,
+        showConfirmPassword: !values.showConfirmPassword,
+        // checkTick: isShowPasswordChecked,
+      });
+    }
 
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
@@ -46,10 +125,10 @@ export default function Registration() {
           </div>
           <div className="createAccountDiv">
             <span className="createAccount">
-              Create your Fundoo Notes Account
+              Create your FundooNotes Account
             </span>
           </div>
-          <form>
+          <form onSubmit={handleSubmit} autoComplete="off">
             <div className="innerImg">
               <div className="inputBox">
                 <div className="firstAndLast">
@@ -60,6 +139,9 @@ export default function Registration() {
                       label="First name"
                       variant="outlined"
                       size="small"
+                      error={firstNameError}
+                      helperText={firstNameError ? "Invalid first name" : ""}
+                      onChange={(e) => setFirstName(e.target.value)}
                     />
                   </div>
                   <div className="lastName">
@@ -69,12 +151,15 @@ export default function Registration() {
                       label="Last name"
                       variant="outlined"
                       size="small"
+                      error={lastNameError}
+                      helperText={lastNameError ? "Invalid last name" : ""}
+                      onChange={(e) => setLastName(e.target.value)}
                     />
                   </div>
                 </div>
                 <div className="emailId">
                   <TextField
-                    helperText="You can enter letters, numbers and periods"
+                    // helperText="You can enter letters, numbers and periods"
                     required
                     className="emailIdBox"
                     fullWidth
@@ -82,36 +167,78 @@ export default function Registration() {
                     size="small"
                     autoComplete="email"
                     placeholder="abc.123@example.com"
+                    error={emailError}
+                    helperText={
+                        emailError
+                          ? "Invalid email"
+                          : "You can use letters,numbers & periods"
+                      }
+                      onChange={(e) => setEmail(e.target.value)}
                     //   InputProps={{endAdornment: <InputAdornment position="end">@example.com</InputAdornment>}}
                   />
                 </div>
                 <div className="password">
                   <div className="firstPassword">
-                    <TextField
-                      required
-                      className="firstPasswordBox"
-                      label="Password"
-                      variant="outlined"
-                      size="small"
-                      variant="outlined"
-                      size="small"
-                      type={values.showPassword ? "text" : "password"}
-                      value={values.password1}
-                      onChange={handleChange("password1")}
-                    />
+                    <FormControl variant="outlined" size="small">
+                      <InputLabel htmlFor="outlined-adornment-password">
+                        Password
+                      </InputLabel>
+                      <OutlinedInput
+                        className="firstPasswordBox"
+                        type={values.showPassword ? "text" : "password"}
+                        value={values.password}
+                        onChange={handleChange("password")}
+                        label="Password"
+                        error={passwordError}
+                        endAdornment={
+                          <InputAdornment position="end">
+                            <IconButton
+                              aria-label="toggle password visibility"
+                              onClick={handleClickShowPassword}
+                              onMouseDown={handleMouseDownPassword}
+                              edge="end"
+                            >
+                              {values.showPassword ? (
+                                <VisibilityOff />
+                              ) : (
+                                <Visibility />
+                              )}
+                            </IconButton>
+                          </InputAdornment>
+                        }
+                      />
+                    </FormControl>
                   </div>
                   <div className="confirm">
-                    <TextField
-                      // type="password"
-                      required
-                      className="confirmBox"
-                      label="Confirm"
-                      variant="outlined"
-                      size="small"
-                      type={values.showPassword ? "text" : "password"}
-                      value={values.password2}
-                      onChange={handleChange("password2")}
-                    />
+                    <FormControl variant="outlined" size="small">
+                      <InputLabel htmlFor="outlined-adornment-password">
+                        Confirm
+                      </InputLabel>
+                      <OutlinedInput
+                        className="confirmBox"
+                        type={values.showConfirmPassword ? "text" : "password"}
+                        value={values.confirmPassword}
+                        error={confirmPasswordError}
+                        onChange={handleChange("confirmPassword")}
+                        endAdornment={
+                          <InputAdornment position="end">
+                            <IconButton
+                              aria-label="toggle password visibility"
+                              onClick={handleClickShowConfirmPassword}
+                              onMouseDown={handleMouseDownPassword}
+                              edge="end"
+                            >
+                              {values.showConfirmPassword ? (
+                                <VisibilityOff />
+                              ) : (
+                                <Visibility />
+                              )}
+                            </IconButton>
+                          </InputAdornment>
+                        }
+                        label="Password"
+                      />
+                    </FormControl>
                   </div>
                 </div>
                 <div className="passwordInfo">
@@ -125,10 +252,10 @@ export default function Registration() {
                     control={
                       <Checkbox
                         value="allowExtraEmails"
-                        color="primary" /*onClick={myFunction(confirm)}*/
-                        onClick={handleClickShowPassword}
+                        color="primary"
+                        onClick={handleClickShowPasswordBoth}
                         onMouseDown={handleMouseDownPassword}
-                     / >
+                      />
                     }
                     label={
                       <Typography style={{ fontSize: "14px" }}>
@@ -139,10 +266,12 @@ export default function Registration() {
                 </div>
                 <div className="signInSignUp">
                   <div className="signIn">
-                    <span>Sign in instead</span>
+                      <a href = "[absolute url]" text-decoration ="none">
+                    <span variant="text"   to="/login">Sign in instead</span>
+                    </a>
                   </div>
                   <div className="signUp">
-                    <Button variant="contained">Sign Up</Button>
+                    <Button variant="contained" type ="submit">Sign Up</Button>
                   </div>
                 </div>
               </div>
