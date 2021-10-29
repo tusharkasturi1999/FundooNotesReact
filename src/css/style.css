@@ -30,7 +30,25 @@
     display: flex;
 }
 }
+.imgBoxLogin{
+        /* box-flex: 1; */
+        position: relative;
+        width: 498px;
+        height: auto;
+        min-height: 500px;
+        /* top: 30%; */
+        right: 50%;
+        left: 50%;
+        /* height: 570px; */
+        margin-top: 4em; /*set to a negative number 1/2 of your height*/
+        margin-left: -246px; /*set to a negative number 1/2 of your width  */
+        /* margin-right: 25em;*/
+        margin-bottom: 5em;
+        border-radius: 8px;
+        border: 1px solid #b2b2b4;
+        transition: width 0.5s;
 
+}
 @media only screen and (max-width: 900px) {
     .imgBox{
         /* box-flex: 1; */
@@ -110,7 +128,6 @@
 
 .inputBox {
   padding: 24px 0 0;
-  width: 430px;
 }
 
 .firstAndLast {
@@ -135,6 +152,10 @@
 .password {
   display: inline-block;
   display: flex;
+}
+
+.passwordBoxLogin{
+  padding-top: 24px;
 }
 
 .firstPassword {
@@ -217,4 +238,14 @@ a:link {
   /* selected link */
   a:active {
     color: #1a73e8;
+  }
+
+  .subheadLogin{
+    font-family: roboto,'Noto Sans Myanmar UI',arial,sans-serif;
+    padding: 8px 0px 0px;
+    color: #494a4d;
+    font-size: 16px;
+    font-weight: 400;
+    letter-spacing: 0.1px;
+    line-height: 1.5;
   }

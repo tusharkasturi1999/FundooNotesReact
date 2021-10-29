@@ -22,8 +22,9 @@ import {
   validFirstName,
   validLastName,
 } from "../validation/formValidation";
+import { margin, width } from "@mui/system";
 
-export default function Registration() {
+export default function Login() {
   const [values, setValues] = React.useState({
     password: "",
     confirmPassword: "",
@@ -118,54 +119,31 @@ export default function Registration() {
   };
   //   render(){
   return (
-    <div className="imgBox">
+    <div className="imgBoxLogin">
       <div className="outerBox">
         <div className="outerPadding">
-          <div>
+          <div style={{textAlign: "center"}}>
             <span className="fundooNotesRainbow">FundooNotes</span>
           </div>
-          <div className="createAccountDiv">
+          <div className="createAccountDiv" style={{textAlign: "center"}}>
             <span className="createAccount">
-              Create your FundooNotes Account
+              Sign in
             </span>
           </div>
+          <div className="subheadLogin" style={{textAlign: "center"}}>
+              <span>Use your FundooNotes Account</span>
+          </div>
+          <div style={{width:"418px"}}>
           <form onSubmit={handleSubmit} autoComplete="off">
-            <div className="innerImg">
-              <div className="inputBox">
-                <div className="firstAndLast">
-                  <div className="firstName">
-                    <TextField
-                      required
-                      className="firstNameBox"
-                      label="First name"
-                      variant="outlined"
-                      size="small"
-                      error={firstNameError}
-                      helperText={firstNameError ? "Invalid first name" : ""}
-                      onChange={(e) => setFirstName(e.target.value)}
-                    />
-                  </div>
-                  <div className="lastName">
-                    <TextField
-                      required
-                      className="lastNameBox"
-                      label="Last name"
-                      variant="outlined"
-                      size="small"
-                      error={lastNameError}
-                      helperText={lastNameError ? "Invalid last name" : ""}
-                      onChange={(e) => setLastName(e.target.value)}
-                    />
-                  </div>
-                </div>
-                <div className="emailId">
+           
+              <div className="inputBox" style={{width:"366px",margin:"26px", padding:"0px"}} >
+               
                   <TextField
                     // helperText="You can enter letters, numbers and periods"
                     required
                     className="emailIdBox"
                     fullWidth
                     label="Email Id"
-                    size="small"
                     autoComplete="email"
                     placeholder="abc.123@example.com"
                     error={emailError}
@@ -177,17 +155,16 @@ export default function Registration() {
                       onChange={(e) => setEmail(e.target.value)}
                     //   InputProps={{endAdornment: <InputAdornment position="end">@example.com</InputAdornment>}}
                   />
-                </div>
-                <div className="password">
-                  <div className="firstPassword">
-                    <FormControl variant="outlined" size="small">
-                      <InputLabel htmlFor="outlined-adornment-password">
+                  <div className="passwordBoxLogin">
+                    <FormControl  variant="outlined" fullWidth >
+                      <InputLabel htmlFor="outlined-adornment-password" >
                         Password
                       </InputLabel>
                       <OutlinedInput
                         className="firstPasswordBox"
                         type={values.showPassword ? "text" : "password"}
                         value={values.password}
+                        fullWidth
                         onChange={handleChange("password")}
                         label="Password"
                         error={passwordError}
@@ -209,39 +186,7 @@ export default function Registration() {
                         }
                       />
                     </FormControl>
-                  </div>
-                  <div className="confirm">
-                    <FormControl variant="outlined" size="small">
-                      <InputLabel htmlFor="outlined-adornment-password">
-                        Confirm
-                      </InputLabel>
-                      <OutlinedInput
-                        className="confirmBox"
-                        type={values.showConfirmPassword ? "text" : "password"}
-                        value={values.confirmPassword}
-                        error={confirmPasswordError}
-                        onChange={handleChange("confirmPassword")}
-                        endAdornment={
-                          <InputAdornment position="end">
-                            <IconButton
-                              aria-label="toggle password visibility"
-                              onClick={handleClickShowConfirmPassword}
-                              onMouseDown={handleMouseDownPassword}
-                              edge="end"
-                            >
-                              {values.showConfirmPassword ? (
-                                <VisibilityOff />
-                              ) : (
-                                <Visibility />
-                              )}
-                            </IconButton>
-                          </InputAdornment>
-                        }
-                        label="Password"
-                      />
-                    </FormControl>
-                  </div>
-                </div>
+                    </div>
                 <div className="passwordInfo">
                   <span>
                     Use 8 or more characters with a mix of letters, numbers &
@@ -267,25 +212,19 @@ export default function Registration() {
                 </div>
                 <div className="signInSignUp">
                   <div className="signIn">
-                      <a href = "/login" text-decoration ="none">
-                    <span variant="text">Sign in instead</span>
+                      <a href = "/" text-decoration ="none">
+                    <span variant="text" to="/" >Create account</span>
                     </a>
                   </div>
                   <div className="signUp">
-                    <Button variant="contained" type ="submit">Sign Up</Button>
+                    <Button variant="contained" type ="submit">Sign in</Button>
                   </div>
                 </div>
               </div>
-              <div className="img">
-                <img
-                  src={accounts}
-                  width={260}
-                  height={244}
-                  style={{ verticalAlign: "middle" }}
-                />
-              </div>
-            </div>
+
+          
           </form>
+          </div>
         </div>
       </div>
     </div>
