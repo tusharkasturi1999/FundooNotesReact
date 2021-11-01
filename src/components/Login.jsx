@@ -210,6 +210,13 @@ export default function Login() {
                     }
                   />
                 </div>
+                <div>
+                  <div className="signIn" style={{marginTop:"0px"}}>
+                      <a href = "/" text-decoration ="none">
+                    <span variant="text" to="/" >Forgot password?</span>
+                    </a>
+                  </div>
+                  </div>
                 <div className="signInSignUp">
                   <div className="signIn">
                       <a href = "/" text-decoration ="none">

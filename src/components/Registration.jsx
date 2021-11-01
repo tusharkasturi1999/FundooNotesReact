@@ -22,16 +22,11 @@ import {
   validFirstName,
   validLastName,
 } from "../validation/formValidation";
+import {handleAxiosPost} from"../helper/axios"
+const axios = require('axios').default;
 
 export default function Registration() {
-  const [values, setValues] = React.useState({
-    password: "",
-    confirmPassword: "",
-    showPassword: false,
-    showConfirmPassword: false,
-    checkTick: true,
-  });
-
+ 
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -43,10 +38,32 @@ export default function Registration() {
   const [passwordError, setPasswordError] = useState(false);
   const [confirmPasswordError, setPasswordConfirmError] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  const handleChange = (prop) => (event) => {
-    setValues({ ...values, [prop]: event.target.value });
-  };
+
+   let FN = firstName
+   let LN = lastName
+   let EM = email
+   let PW = password
+
+  const handleAxiosPost = () =>{
+    axios.post('http://localhost:4000/user/', {
+      firstName: FN,
+      lastName: LN,
+      age: 20,
+      email: EM,
+      password: PW
+    })
+    .then(function (response) {
+      console.log(response);
+      if(response.status == 200)
+      alert("User Successfully Created")
+    })
+    .catch(function (error) {
+      alert("Some Error, Try Again")
+      console.log(error);
+    });
+  }
 
     const handleSubmit = (e) => {
     e.preventDefault();
@@ -62,6 +79,7 @@ export default function Registration() {
     if (password !== confirmPassword) {
       setPasswordConfirmError(true);
     }
+    handleAxiosPost();
   };
 
   //   useEffect(() => {
@@ -69,48 +87,44 @@ export default function Registration() {
   //   });
 
   const handleClickShowPasswordBoth = (event) => {
-    console.log("Event Clicked, CheckTick:", values.checkTick);
-    //   let isShowPasswordChecked=event.target.checked
-    setValues({
-      ...values,
-      checkTick: !values.checkTick,
-    });
-    console.log("Value after SetValue, CheckTick:", values.checkTick);
-    // let isShowPasswordChecked=event.target.checked
+    handleClickShowPassword();
+    handleClickShowConfirmPassword();
+  }
+  // const handleClickShowPasswordBoth = (event) => {
+  //   console.log("Event Clicked, CheckTick:", values.checkTick);
+  //   //   let isShowPasswordChecked=event.target.checked
+  //   setValues({
+  //     ...values,
+  //     checkTick: !values.checkTick,
+  //   });
+  //   console.log("Value after SetValue, CheckTick:", values.checkTick);
+  //   // let isShowPasswordChecked=event.target.checked
 
-    if (values.checkTick === true) {
-      setValues({
-        ...values,
-        showPassword: true,
-        showConfirmPassword: true,
-        // checkTick: isShowPasswordChecked,
-      });
-    }
+  //   if (values.checkTick === true) {
+  //     setValues({
+  //       ...values,
+  //       showPassword: true,
+  //       showConfirmPassword: true,
+  //       // checkTick: isShowPasswordChecked,
+  //     });
+  //   }
 
-    if (values.checkTick === false) {
-      setValues({
-        ...values,
-        showPassword: "false",
-        showConfirmPassword: "false",
-        // checkTick: isShowPasswordChecked,
-      });
-    }
-  };
+  //   if (values.checkTick === false) {
+  //     setValues({
+  //       ...values,
+  //       showPassword: "false",
+  //       showConfirmPassword: "false",
+  //       // checkTick: isShowPasswordChecked,
+  //     });
+  //   }
+  // };
 
   const handleClickShowPassword =() =>{
-    setValues({
-        ...values,
-        showPassword: !values.showPassword,
-        // checkTick: isShowPasswordChecked,
-      });
+      setShowPassword(!showPassword);
     }
 
   const handleClickShowConfirmPassword =() =>{
-    setValues({
-        ...values,
-        showConfirmPassword: !values.showConfirmPassword,
-        // checkTick: isShowPasswordChecked,
-      });
+    setShowConfirmPassword(!showConfirmPassword);
     }
 
   const handleMouseDownPassword = (event) => {
@@ -118,6 +132,7 @@ export default function Registration() {
   };
   //   render(){
   return (
+
     <div className="imgBox">
       <div className="outerBox">
         <div className="outerPadding">
@@ -186,9 +201,9 @@ export default function Registration() {
                       </InputLabel>
                       <OutlinedInput
                         className="firstPasswordBox"
-                        type={values.showPassword ? "text" : "password"}
-                        value={values.password}
-                        onChange={handleChange("password")}
+                        type={showPassword ? "text" : "password"}
+                        // value={values.password}
+                        onChange={(e) => setPassword(e.target.value)}
                         label="Password"
                         error={passwordError}
                         endAdornment={
@@ -199,7 +214,7 @@ export default function Registration() {
                               onMouseDown={handleMouseDownPassword}
                               edge="end"
                             >
-                              {values.showPassword ? (
+                              {showPassword ? (
                                 <VisibilityOff />
                               ) : (
                                 <Visibility />
@@ -217,10 +232,10 @@ export default function Registration() {
                       </InputLabel>
                       <OutlinedInput
                         className="confirmBox"
-                        type={values.showConfirmPassword ? "text" : "password"}
-                        value={values.confirmPassword}
+                        type={showConfirmPassword ? "text" : "password"}
+                        // value={values.confirmPassword}
                         error={confirmPasswordError}
-                        onChange={handleChange("confirmPassword")}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
                         endAdornment={
                           <InputAdornment position="end">
                             <IconButton
@@ -229,7 +244,7 @@ export default function Registration() {
                               onMouseDown={handleMouseDownPassword}
                               edge="end"
                             >
-                              {values.showConfirmPassword ? (
+                              {showConfirmPassword ? (
                                 <VisibilityOff />
                               ) : (
                                 <Visibility />

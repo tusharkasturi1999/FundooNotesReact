@@ -109,6 +109,10 @@
   -moz-background-clip: text;
   background-clip: text;
   color: transparent;
+  user-select: none;
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
 }
 
 .createAccountDiv {
