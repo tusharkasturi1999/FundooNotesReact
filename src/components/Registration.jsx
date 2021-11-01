@@ -60,7 +60,7 @@ export default function Registration() {
       alert("User Successfully Created")
     })
     .catch(function (error) {
-      alert("Some Error, Try Again")
+      alert("Some Error, Try Again") 
       console.log(error);
     });
   }
