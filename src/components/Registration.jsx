@@ -1,9 +1,7 @@
-import React, { useState, useEffect } from "react";
-import "../css/style.css";
+import React, { useState } from "react";
+import "../css/style.scss";
 import accounts from "../assets/accounts.PNG";
-import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import InputAdornment from "@mui/material/InputAdornment";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -15,18 +13,15 @@ import IconButton from "@mui/material/IconButton";
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import OutlinedInput from "@mui/material/OutlinedInput";
-import { Link } from "react-router-dom";
 import {
   validPassword,
   validEmail,
   validFirstName,
   validLastName,
-} from "../validation/formValidation";
-import {handleAxiosPost} from"../helper/axios"
-const axios = require('axios').default;
+} from "../config/formValidation";
+import createLogin from "../helper/axios";
 
 export default function Registration() {
- 
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -40,99 +35,82 @@ export default function Registration() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
+  let FN = firstName;
+  let LN = lastName;
+  let EM = email;
+  let PW = password;
 
-   let FN = firstName
-   let LN = lastName
-   let EM = email
-   let PW = password
+  const datas = {
+    firstName: FN,
+    lastName: LN,
+    age: 21,
+    email: EM,
+    password: PW,
+  };
 
-  const handleAxiosPost = () =>{
-    axios.post('http://localhost:4000/user/', {
-      firstName: FN,
-      lastName: LN,
-      age: 20,
-      email: EM,
-      password: PW
-    })
-    .then(function (response) {
-      console.log(response);
-      if(response.status == 200)
-      alert("User Successfully Created")
-    })
-    .catch(function (error) {
-      alert("Some Error, Try Again") 
-      console.log(error);
-    });
-  }
-
-    const handleSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     setFirstNameError(false);
     setLastNameError(false);
     setEmailError(false);
     setPasswordError(false);
     setPasswordConfirmError(false);
-    if (!validFirstName.test(firstName)) setFirstNameError(true);
-    if (!validLastName.test(lastName)) setLastNameError(true);
-    if (!validEmail.test(email)) setEmailError(true);
-    if (!validPassword.test(password)) setPasswordError(true);
+    let flag = false;
+    if (!validFirstName.test(firstName)) {
+      setFirstNameError(true);
+      flag = true;
+    }
+    if (!validLastName.test(lastName)) {
+      setLastNameError(true);
+      flag = true;
+    }
+    if (!validEmail.test(email)) {
+      setEmailError(true);
+      flag = true;
+    }
+    if (!validPassword.test(password)) {
+      setPasswordError(true);
+      flag = true;
+    }
+
     if (password !== confirmPassword) {
       setPasswordConfirmError(true);
+      flag = true;
     }
-    handleAxiosPost();
+    if (flag !== true) {
+      createLogin.handleAxiosPost(datas);
+    }
   };
 
-  //   useEffect(() => {
-
-  //   });
+  let checkTick = false;
 
   const handleClickShowPasswordBoth = (event) => {
-    handleClickShowPassword();
-    handleClickShowConfirmPassword();
-  }
-  // const handleClickShowPasswordBoth = (event) => {
-  //   console.log("Event Clicked, CheckTick:", values.checkTick);
-  //   //   let isShowPasswordChecked=event.target.checked
-  //   setValues({
-  //     ...values,
-  //     checkTick: !values.checkTick,
-  //   });
-  //   console.log("Value after SetValue, CheckTick:", values.checkTick);
-  //   // let isShowPasswordChecked=event.target.checked
+    checkTick = !checkTick;
+    setShowPassword(false);
+    setShowConfirmPassword(true);
 
-  //   if (values.checkTick === true) {
-  //     setValues({
-  //       ...values,
-  //       showPassword: true,
-  //       showConfirmPassword: true,
-  //       // checkTick: isShowPasswordChecked,
-  //     });
-  //   }
-
-  //   if (values.checkTick === false) {
-  //     setValues({
-  //       ...values,
-  //       showPassword: "false",
-  //       showConfirmPassword: "false",
-  //       // checkTick: isShowPasswordChecked,
-  //     });
-  //   }
-  // };
-
-  const handleClickShowPassword =() =>{
-      setShowPassword(!showPassword);
+    if (checkTick === true) {
+      setShowPassword(true);
+      setShowConfirmPassword(true);
+    } else {
+      setShowPassword(false);
+      setShowConfirmPassword(false);
     }
+  };
 
-  const handleClickShowConfirmPassword =() =>{
+  const handleClickShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const handleClickShowConfirmPassword = () => {
     setShowConfirmPassword(!showConfirmPassword);
-    }
+  };
 
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
   //   render(){
   return (
-
     <div className="imgBox">
       <div className="outerBox">
         <div className="outerPadding">
@@ -145,6 +123,7 @@ export default function Registration() {
             </span>
           </div>
           <form onSubmit={handleSubmit} autoComplete="off">
+
             <div className="innerImg">
               <div className="inputBox">
                 <div className="firstAndLast">
@@ -185,11 +164,11 @@ export default function Registration() {
                     placeholder="abc.123@example.com"
                     error={emailError}
                     helperText={
-                        emailError
-                          ? "Invalid email"
-                          : "You can use letters,numbers & periods"
-                      }
-                      onChange={(e) => setEmail(e.target.value)}
+                      emailError
+                        ? "Invalid email"
+                        : "You can use letters,numbers & periods"
+                    }
+                    onChange={(e) => setEmail(e.target.value)}
                     //   InputProps={{endAdornment: <InputAdornment position="end">@example.com</InputAdornment>}}
                   />
                 </div>
@@ -282,17 +261,20 @@ export default function Registration() {
                 </div>
                 <div className="signInSignUp">
                   <div className="signIn">
-                      <a href = "/login" text-decoration ="none">
-                    <span variant="text">Sign in instead</span>
+                    <a href="/login" text-decoration="none">
+                      <span variant="text">Sign in instead</span>
                     </a>
                   </div>
                   <div className="signUp">
-                    <Button variant="contained" type ="submit">Sign Up</Button>
+                    <Button variant="contained" type="submit">
+                      Sign Up
+                    </Button>
                   </div>
                 </div>
               </div>
               <div className="img">
                 <img
+                  alt=""
                   src={accounts}
                   width={260}
                   height={244}

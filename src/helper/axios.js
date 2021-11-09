@@ -1,22 +1,83 @@
+import "../components/Registration";
+import "../components/Login";
+import "../components/forgot";
+import "../components/reset";
+import { baseURL } from "../config/local";
+import { Redirect } from "react-router-dom";
+const axios = require("axios");
 
-// import "../components/Registration";
-// const axios = require('axios').default;
+const handleAxiosPost = (datas) => {
+  axios({
+    method: "post",
+    url: "http://localhost:4000/user",
+    data: datas,
+  })
+    .then(function (response) {
+      console.log(response);
+      if (response.data.status === 200) alert("Log In Successfull");
+      if (response.data.status !== 200) alert(response.data.message);
+    })
+    .catch(function (error) {
+      alert("Some Error, Try Again");
+      console.log(error);
+    });
+};
 
-// export const handleAxiosPost = () =>{
-//     axios.post('http://localhost:4000/user/', {
-//       firstName: FN,
-//       lastName: Registration.LN,
-//       age: 20,
-//       email: Registration.EM,
-//       password: Registration.PW
-//     })
-//     .then(function (response) {
-//       console.log(response);
-//       if(response.status == 200)
-//       alert("User Successfully Created")
-//     })
-//     .catch(function (error) {
-//       alert("Some Error, Try Again")
-//       console.log(error);
-//     });
-//   }
+const handleAxiosLogin = (datasLogin) => {
+  axios({
+    method: "post",
+    url: "http://localhost:4000/user/login",
+    data: datasLogin,
+  })
+    .then(function (response) {
+      console.log(response.data);
+      if (response.data.status === 200) alert("Log In Successfull");
+      if (response.data.status !== 200) alert(response.data.message);
+    })
+    .catch(function (error) {
+      alert("Some Error, Try Again");
+      console.log(error);
+    });
+};
+
+const handleAxiosForgot = (datasForgot) => {
+  axios({
+    method: "post",
+    url: "http://localhost:4000/user/forgot",
+    data: datasForgot,
+  })
+    .then(function (response) {
+      console.log(response.data);
+      if (response.data === "Recovery Mail Sent Successfully"){ alert("Recovery Mail Sent Successfully"); <Redirect to={{pathname: "/login"}}/>}
+      if (response.data === "Email not found") {alert("Email not found. Please create new Account");window.location.reload()}
+    })
+    .catch(function (error) {
+      alert("Some Error, Try Again");
+      console.log(error);
+      window.location.reload()
+
+    });
+};
+
+const handleAxiosReset = (data, token) => {
+  axios({
+    method: "post",
+    url: baseURL + "/user/reset/" + token,
+    data: data,
+  })
+    .then(function (response) {
+      console.log(response.data);
+      if (response.data.status === 200) alert("Log In Successfull");
+      if (response.data.status !== 200) alert(response.data.message);
+    })
+    .catch(function (error) {
+      alert("Some Error, Try Again");
+      console.log(error);
+    });
+};
+export default {
+  handleAxiosPost,
+  handleAxiosLogin,
+  handleAxiosForgot,
+  handleAxiosReset,
+};
