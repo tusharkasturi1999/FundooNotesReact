@@ -103,7 +103,7 @@ export default function Reset() {
                   helperText={confirmPasswordError ? "Password mismatch" : ""}
                   fullWidth
                   onChange={(e) => setConfirmPassword(e.target.value)}
-                />
+                /> 
                   <div className="showPasswordMsg">
                   <FormControlLabel
                     control={
