@@ -14,6 +14,7 @@ import InputLabel from "@mui/material/InputLabel";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import Login1 from "../helper/axios";
 import { validPassword, validEmail } from "../config/formValidation";
+import { Redirect } from "react-router";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -21,6 +22,7 @@ export default function Login() {
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [success,setSuccess] = useState(false);
 
   let EM = email;
   let PW = password;
@@ -43,7 +45,8 @@ export default function Login() {
     }
 
     if (flag !== true) {
-      Login1.handleAxiosLogin(dataslogin);
+      Login1
+      .handleAxiosLogin(dataslogin)
     }
   };
 
@@ -163,8 +166,8 @@ export default function Login() {
                 </div>
                 <div className="signInSignUp">
                   <div className="signIn">
-                    <a href="/" text-decoration="none">
-                      <span variant="text" to="/">
+                    <a href="/createAccount" text-decoration="none">
+                      <span variant="text" to="/createAccount">
                         Create account
                       </span>
                     </a>
@@ -176,6 +179,7 @@ export default function Login() {
                   </div>
                 </div>
               </div>
+              {success?<Redirect to="/dashboard"/>:null}
             </form>
           </div>
         </div>

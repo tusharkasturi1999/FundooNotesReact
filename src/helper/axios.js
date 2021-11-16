@@ -1,10 +1,27 @@
-import "../components/Registration";
-import "../components/Login";
-import "../components/forgot";
-import "../components/reset";
+import "../pages/Registration";
+import "../pages/Login";
+import "../pages/Forgot";
+import "../pages/Reset";
 import { baseURL } from "../config/local";
 import { Redirect } from "react-router-dom";
 const axios = require("axios");
+
+const post = (requestObject) => {
+  return axios({
+    method: requestObject.method,
+    url: requestObject.url,
+    headers: requestObject.headers,
+    data: requestObject.data,
+  });
+};
+
+const get = (requestObject) => {
+  return axios({
+    method: requestObject.method,
+    url: requestObject.url,
+    headers: requestObject.headers,
+  });
+};
 
 const handleAxiosPost = (datas) => {
   axios({
@@ -31,8 +48,10 @@ const handleAxiosLogin = (datasLogin) => {
   })
     .then(function (response) {
       console.log(response.data);
-      if (response.data.status === 200) alert("Log In Successfull");
+      if (response.data.status === 200){ alert("Log In Successfull"); localStorage.setItem('token',response.data.message.Token);};
       if (response.data.status !== 200) alert(response.data.message);
+      console.log("Token"+response.data.message.Token);
+      
     })
     .catch(function (error) {
       alert("Some Error, Try Again");
@@ -48,14 +67,19 @@ const handleAxiosForgot = (datasForgot) => {
   })
     .then(function (response) {
       console.log(response.data);
-      if (response.data === "Recovery Mail Sent Successfully"){ alert("Recovery Mail Sent Successfully"); <Redirect to={{pathname: "/login"}}/>}
-      if (response.data === "Email not found") {alert("Email not found. Please create new Account");window.location.reload()}
+      if (response.data === "Recovery Mail Sent Successfully") {
+        alert("Recovery Mail Sent Successfully");
+        <Redirect to={{ pathname: "/login" }} />;
+      }
+      if (response.data === "Email not found") {
+        alert("Email not found. Please create new Account");
+        window.location.reload();
+      }
     })
     .catch(function (error) {
       alert("Some Error, Try Again");
       console.log(error);
-      window.location.reload()
-
+      window.location.reload();
     });
 };
 
@@ -80,4 +104,6 @@ export default {
   handleAxiosLogin,
   handleAxiosForgot,
   handleAxiosReset,
+  post,
+  get,
 };

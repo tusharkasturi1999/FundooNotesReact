@@ -11,7 +11,7 @@ export default function Forgot() {
   const datasForgot = { email: email };
 
   const handleSubmit = (e) => {
-     e.preventDefault();
+    e.preventDefault();
 
     setEmailError(false);
     let flag = false;
@@ -62,7 +62,11 @@ export default function Forgot() {
                   onChange={(e) => setEmail(e.target.value)}
                   //   InputProps={{endAdornment: <InputAdornment position="end">@example.com</InputAdornment>}}
                 />
-
+                <div className="signIn">
+                  <a href="/" text-decoration="none">
+                    <span variant="text">Sign in instead</span>
+                  </a>
+                </div>
                 <div className="signInSignUp">
                   <div className="signIn">
                     <a href="/" textDecoration="none">

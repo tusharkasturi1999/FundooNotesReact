@@ -261,7 +261,7 @@ export default function Registration() {
                 </div>
                 <div className="signInSignUp">
                   <div className="signIn">
-                    <a href="/login" text-decoration="none">
+                    <a href="/" text-decoration="none">
                       <span variant="text">Sign in instead</span>
                     </a>
                   </div>
