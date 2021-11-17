@@ -24,7 +24,7 @@
 //       padding="8px 12px"
 //       spacing={1}
 //     //   margin="0px 0px 0px 12px"
-      
+
 //       justifyContent="space-evenly"
 //     >
 //       <Grid item xs>
@@ -58,17 +58,28 @@
 
 import React from "react";
 import { styled } from "@mui/material/styles";
-import { autocompleteClasses, IconButton, List, ListItem} from "@mui/material";
+import { autocompleteClasses, IconButton, List } from "@mui/material";
 import MuiDrawer from "@mui/material/Drawer";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import NoteOutlinedIcon from '@mui/icons-material/NoteOutlined';
-import NotificationsNoneOutlinedIcon from '@mui/icons-material/NotificationsNoneOutlined';
-import LightbulbOutlinedIcon from '@mui/icons-material/LightbulbOutlined';
-import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
-import ArchiveOutlinedIcon from '@mui/icons-material/ArchiveOutlined';
-import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
-import { color, style } from "@mui/system";
+import NoteOutlinedIcon from "@mui/icons-material/NoteOutlined";
+import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNoneOutlined";
+import LightbulbOutlinedIcon from "@mui/icons-material/LightbulbOutlined";
+import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
+import ArchiveOutlinedIcon from "@mui/icons-material/ArchiveOutlined";
+import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
+import { ListItem } from "@mui/material";
+
+const ListItems = styled(ListItem)`
+  &:hover {
+    background-color: #E6E8E6;
+  }
+  &:focus {
+    background-color: #feefc3;
+  }
+  border-radius: 0 25px 25px 0;
+`;
+
 
 const drawerWidth = 240;
 const openedMixin = (theme) => ({
@@ -96,16 +107,24 @@ const closedMixin = (theme) => ({
   },
 });
 
-const DrawerHeader = styled("div")(({ theme }) => ({
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "flex-end",
-  padding: theme.spacing(0, 1),
-  // necessary for content to be below app bar
-  ...theme.mixins.toolbar,
-}));
-
 const Drawer = styled(MuiDrawer, {
+  overrides: {
+    MuiListItem: {
+      root: {
+        "&$selected": {
+          backgroundColor: "red",
+          "&:hover": {
+            backgroundColor: "orange",
+          },
+        },
+      },
+      button: {
+        "&:hover": {
+          backgroundColor: "yellow",
+        },
+      },
+    },
+  },
   shouldForwardProp: (prop) => prop !== "open",
 })(({ theme, open }) => ({
   width: drawerWidth,
@@ -122,48 +141,53 @@ const Drawer = styled(MuiDrawer, {
   }),
 }));
 
-const SideBar = ({ open }) => {
 
+const SideBar = ({ open, handleDrawerHover, handleDrawerHoverLeave }) => {
   return (
-    <Drawer variant="permanent" open={open} >
-      <DrawerHeader />
+    <Drawer
+      variant="permanent"
+      open={open}
+      onMouseOver={handleDrawerHover}
+      onMouseLeave={handleDrawerHoverLeave}
+    >
+      {/* <DrawerHeader /> */}
       <List>
-          <ListItem button>
-            <ListItemIcon >
-             <LightbulbOutlinedIcon/>
-            </ListItemIcon>
-            <ListItemText primary="Notes" />
-          </ListItem>
-          <ListItem button>
-            <ListItemIcon>
-             <NotificationsNoneOutlinedIcon/>
-            </ListItemIcon>
-            <ListItemText primary="Reminders" />
-          </ListItem>
-          <ListItem button>
-            <ListItemIcon>
-             <NoteOutlinedIcon/>
-            </ListItemIcon>
-            <ListItemText primary="Label" />
-          </ListItem>
-          <ListItem button>
-            <ListItemIcon>
-             <EditOutlinedIcon/>
-            </ListItemIcon>
-            <ListItemText primary="Edit labels" />
-          </ListItem>
-          <ListItem button>
-            <ListItemIcon>
-             <ArchiveOutlinedIcon/>
-            </ListItemIcon>
-            <ListItemText primary="Archive" />
-          </ListItem>
-          <ListItem button>
-            <ListItemIcon>
-             <DeleteOutlineOutlinedIcon/>
-            </ListItemIcon>
-            <ListItemText primary="Trash" />
-          </ListItem>
+        <ListItems button >
+          <ListItemIcon>
+            <LightbulbOutlinedIcon />
+          </ListItemIcon>
+          <ListItemText primary="Notes" />
+        </ListItems>
+        <ListItems button>
+          <ListItemIcon>
+          <NotificationsNoneOutlinedIcon/>
+          </ListItemIcon>
+          <ListItemText primary="Reminders" />
+        </ListItems>
+        {/* <ListItems button>
+          <ListItemIcon>
+            <NoteOutlinedIcon />
+          </ListItemIcon>
+          <ListItemText primary="Label" />
+        </ListItems> */}
+        <ListItems button>
+          <ListItemIcon>
+            <EditOutlinedIcon />
+          </ListItemIcon>
+          <ListItemText primary="Edit labels" />
+        </ListItems>
+        <ListItems button>
+          <ListItemIcon>
+            <ArchiveOutlinedIcon />
+          </ListItemIcon>
+          <ListItemText primary="Archive" />
+        </ListItems>
+        <ListItems button>
+          <ListItemIcon>
+            <DeleteOutlineOutlinedIcon />
+          </ListItemIcon>
+          <ListItemText primary="Trash" />
+        </ListItems>
       </List>
     </Drawer>
   );

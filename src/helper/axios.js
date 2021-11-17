@@ -41,17 +41,17 @@ const handleAxiosPost = (datas) => {
 };
 
 const handleAxiosLogin = (datasLogin) => {
-  axios({
+ return axios({
     method: "post",
     url: "http://localhost:4000/user/login",
     data: datasLogin,
   })
-    .then(function (response) {
-      console.log(response.data);
-      if (response.data.status === 200){ alert("Log In Successfull"); localStorage.setItem('token',response.data.message.Token);};
-      if (response.data.status !== 200) alert(response.data.message);
-      console.log("Token"+response.data.message.Token);
-      
+    .then((response) => {
+      // console.log(response.data);
+      // if (response.data.status === 200){ alert("Log In Successfull"); localStorage.setItem('token',response.data.message.Token);};
+      // if (response.data.status !== 200) alert(response.data.message);
+      // console.log("Token"+response.data.message.Token);
+      return response
     })
     .catch(function (error) {
       alert("Some Error, Try Again");

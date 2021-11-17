@@ -22,7 +22,7 @@ export default function Login() {
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const [success,setSuccess] = useState(false);
+  const [success, setSuccess] = useState(false);
 
   let EM = email;
   let PW = password;
@@ -45,8 +45,16 @@ export default function Login() {
     }
 
     if (flag !== true) {
-      Login1
-      .handleAxiosLogin(dataslogin)
+      Login1.handleAxiosLogin(dataslogin).then((response) => {
+        console.log(response.data);
+        if (response.data.status === 200) {
+          alert("Log In Successfull");
+          localStorage.setItem("token", response.data.message.Token);
+          setSuccess(true);
+        }
+        if (response.data.status !== 200) alert(response.data.message);
+        console.log("Token" + response.data.message.Token);
+      });
     }
   };
 
@@ -179,7 +187,7 @@ export default function Login() {
                   </div>
                 </div>
               </div>
-              {success?<Redirect to="/dashboard"/>:null}
+              {success ? <Redirect to="/dashboard" /> : null}
             </form>
           </div>
         </div>
