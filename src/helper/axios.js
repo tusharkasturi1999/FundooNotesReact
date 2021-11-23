@@ -74,10 +74,9 @@ const handleAxiosForgot = (datasForgot) => {
     data: datasForgot,
   })
     .then(function (response) {
-      console.log(response.data);
-      if (response.data === "Recovery Mail Sent Successfully") {
+      console.log(response);
+      if (response.data.msg === "Recovery email sent successfully") {
         alert("Recovery Mail Sent Successfully");
-        <Redirect to={{ pathname: "/login" }} />;
       }
       if (response.data === "Email not found") {
         alert("Email not found. Please create new Account");
@@ -99,7 +98,7 @@ const handleAxiosReset = (data, token) => {
   })
     .then(function (response) {
       console.log(response.data);
-      if (response.data.status === 200) alert("Log In Successfull");
+      if (response.data.status === 200) alert("Recovery email sent successfully");
       if (response.data.status !== 200) alert(response.data.message);
     })
     .catch(function (error) {
