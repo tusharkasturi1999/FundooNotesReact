@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../css/style.scss";
+import "../styles/loginCreateResetForgot.scss";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import { validEmail } from "../config/formValidation";

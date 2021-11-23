@@ -4,6 +4,7 @@ import { Box } from "@mui/material";
 import Note from "../components/Notes";
 import AppBar from "../components/AppBar";
 import SideBar from "../components/SideBar";
+import AddNote from "../components/AddNote.jsx";
 import { useDispatch } from "react-redux";
 import { setNotes } from "../actions/noteActions"
 
@@ -50,7 +51,7 @@ const Dashboard = () => {
   return (
     <Box>
       <AppBar handleDrawerOpen={handleDrawerOpen} />
-      <Box sx={{ display: "flex" }}>
+      <Box sx={{ display: "flex"}}>
         <SideBar
           open={open}
           handleDrawerOpen={handleDrawerOpen}
@@ -59,7 +60,10 @@ const Dashboard = () => {
         />
         {/* <AppBar handleDrawerOpen={handleDrawerOpen} /> */}
 
-        <Box component="main" sx={{ flexGrow: 1, p: 3, margin: "5% auto" }}>
+        <Box component="main" sx={{ flexGrow: 1, p: 3, }}>
+        {/* <div style={{padding:"0% 4% 4% 4%", width: "50%", marginLeft:"auto", marginRight:"auto"}}> */}
+        <AddNote/>
+        {/* </div> */}
           <Note />
         </Box>
       </Box>

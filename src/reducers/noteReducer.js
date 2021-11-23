@@ -2,15 +2,27 @@ import { ActionTypes } from "../constants/action-types";
 
 const initialState = {
   notes: [],
-  filteredNotes:[]
+  filteredNotes: [],
+  title: "Notes",
+  listView:false
 };
 
-export const noteReducer = (state=initialState, { type, payload }) => {
+export const noteReducer = (state = initialState, { type, payload }) => {
   switch (type) {
     case ActionTypes.SET_NOTES:
-      return {...state,notes:payload}
+      return { ...state, notes: payload };
     case ActionTypes.SET_FILTERED_NOTES:
-        return {...state,filteredNotes:payload}
+      return { ...state, filteredNotes: payload };
+    case ActionTypes.SET_TITLE:
+      return { ...state, title: payload };
+    case ActionTypes.ADD_NEW_NOTE:
+      return { ...state, notes: [...state.notes, payload] };
+    case ActionTypes.LIST_VIEW:
+      return {...state,listView:!state.listView}
+    case ActionTypes.UPDATE_NOTE:
+      let newNote = [...state.notes];
+      newNote[payload.index] = payload.data;
+      return {...state,notes:newNote}
     default:
       return state;
   }

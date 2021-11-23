@@ -58,6 +58,14 @@ const handleAxiosLogin = (datasLogin) => {
       console.log(error);
     });
 };
+const put = (requestObject) => {
+  return axios({
+    method: requestObject.method,
+    url: requestObject.url,
+    headers: requestObject.headers,
+    data: requestObject.data,
+  });
+};
 
 const handleAxiosForgot = (datasForgot) => {
   axios({
@@ -106,4 +114,5 @@ export default {
   handleAxiosReset,
   post,
   get,
+  put
 };

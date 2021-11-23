@@ -1,4 +1,4 @@
-import "../css/dashboard.scss";
+import "../styles/dashboard.scss";
 import React, { useState, useEffect } from "react";
 import Grid from "@mui/material/Grid";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -16,6 +16,9 @@ import Avatar from "react-avatar";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { setFilteredNotes } from "../actions/noteActions";
+import { listView } from "../actions/noteActions";
+import SplitscreenOutlinedIcon from "@mui/icons-material/SplitscreenOutlined";
+import GridViewIcon from "@mui/icons-material/GridView";
 
 // const customTextField = createTheme({
 //   components: {
@@ -68,9 +71,14 @@ export const Appbar = ({ handleDrawerOpen }) => {
   const [search, setSearch] = useState("");
   const myNotes = useSelector((state) => state.allNotes.notes);
   const dispatch = useDispatch();
+  const list = useSelector((state) => state.allNotes.listView);
 
   const handleSearch = (searchValue) => {
     setSearch(searchValue);
+  };
+
+  const handleView = () => {
+    dispatch(listView());
   };
 
   useEffect(() => {
@@ -152,8 +160,18 @@ export const Appbar = ({ handleDrawerOpen }) => {
         </IconButton>
       </Grid>
       <Grid item>
-        <IconButton>
-          <ViewAgendaOutlinedIcon />
+      <IconButton>
+      {!list ? (
+          <ViewAgendaOutlinedIcon 
+            fontSize="medium"
+            onClick={handleView}
+          />
+        ) : (
+          <GridViewIcon
+            fontSize="medium"
+            onClick={handleView}
+          />
+        )}
         </IconButton>
       </Grid>
       <Grid item xl padding="0px 0px 0px 0px">
