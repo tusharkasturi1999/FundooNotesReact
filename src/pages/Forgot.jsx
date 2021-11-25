@@ -63,7 +63,7 @@ export default function Forgot() {
                   //   InputProps={{endAdornment: <InputAdornment position="end">@example.com</InputAdornment>}}
                 />
                 <div className="signIn">
-                  <a href="/" text-decoration="none">
+                  <a href="/" textDecoration="none">
                     <span variant="text">Sign in instead</span>
                   </a>
                 </div>

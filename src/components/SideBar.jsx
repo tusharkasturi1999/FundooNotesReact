@@ -69,7 +69,7 @@ import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import ArchiveOutlinedIcon from "@mui/icons-material/ArchiveOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import { ListItem } from "@mui/material";
-
+import { Link } from "react-router-dom";
 const ListItems = styled(ListItem)`
   &:hover {
     background-color: #E6E8E6;
@@ -152,7 +152,7 @@ const SideBar = ({ open, handleDrawerHover, handleDrawerHoverLeave }) => {
     >
       {/* <DrawerHeader /> */}
       <List>
-        <ListItems button >
+        <ListItems button component={Link} to="/Dashboard">
           <ListItemIcon>
             <LightbulbOutlinedIcon />
           </ListItemIcon>
@@ -182,7 +182,7 @@ const SideBar = ({ open, handleDrawerHover, handleDrawerHoverLeave }) => {
           </ListItemIcon>
           <ListItemText primary="Archive" />
         </ListItems>
-        <ListItems button>
+        <ListItems  button component={Link} to="/trash">
           <ListItemIcon>
             <DeleteOutlineOutlinedIcon />
           </ListItemIcon>

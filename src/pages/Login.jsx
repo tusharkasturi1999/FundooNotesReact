@@ -174,7 +174,7 @@ export default function Login() {
                 </div>
                 <div className="signInSignUp">
                   <div className="signIn">
-                    <a href="/createAccount" text-decoration="none">
+                    <a href="/createAccount" textDecoration="none">
                       <span variant="text" to="/createAccount">
                         Create account
                       </span>

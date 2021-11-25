@@ -38,17 +38,36 @@ const setNotes = (data) => {
     });
 };
 
-const updateNote = (data,id) => {
+const updateNotes = (data, id) => {
   const token = localStorage.getItem("token");
   let reqobj = {
     method: "put",
-    url: url.baseURL + "/notes/"+id,
+    url: url.baseURL + "/notes/" + id,
     headers: {
       Authorization: `bearer ${token}`,
     },
-    data:data
+    data: data,
   };
-  return AxiosHelper.put(reqobj)
+  return AxiosHelper.post(reqobj)
+    .then((response) => {
+      return response;
+    })
+    .catch((err) => {
+      console.log("error occured");
+      throw err;
+    });
+};
+
+const deletNote = (id) => {
+  const token = localStorage.getItem("token");
+  let reqobj = {
+    method: "delete",
+    url: url.baseURL + "/notes/" + id,
+    headers: {
+      Authorization: `bearer ${token}`,
+    },
+  };
+  return AxiosHelper.get(reqobj)
     .then((response) => {
       return response;
     })
@@ -57,4 +76,4 @@ const updateNote = (data,id) => {
     });
 };
 /* eslint import/no-anonymous-default-export: [2, {"allowObject": true}] */
-export default {getNotes,setNotes,updateNote };
+export default { getNotes, setNotes, updateNotes, deletNote };

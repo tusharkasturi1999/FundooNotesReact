@@ -6,9 +6,10 @@ import AppBar from "../components/AppBar";
 import SideBar from "../components/SideBar";
 import AddNote from "../components/AddNote.jsx";
 import { useDispatch } from "react-redux";
-import { setNotes } from "../actions/noteActions"
+import { setTrashNotes} from "../actions/noteActions"
+import Trash from "../components/Trash.jsx";
 
-const Dashboard = () => {
+const Bin = () => {
   const [open, setOpen] = useState(false);
   const [buttonOn, setButtonOn] = useState(false);
 
@@ -23,7 +24,7 @@ const Dashboard = () => {
       .getNotes()
       .then((res) => {
         console.log(res);
-        dispatch(setNotes(res.data.message.filter(item => !item.isTrash)))
+        dispatch(setTrashNotes(res.data.message.filter(item => item.isTrash)))
       })
       .catch((err) => {
         console.log(err);
@@ -64,11 +65,11 @@ const Dashboard = () => {
         {/* <div style={{padding:"0% 4% 4% 4%", width: "50%", marginLeft:"auto", marginRight:"auto"}}> */}
         <AddNote/>
         {/* </div> */}
-          <Note />
+          <Trash />
         </Box>
       </Box>
     </Box>
   );
 };
 
-export default Dashboard;
+export default Bin;
