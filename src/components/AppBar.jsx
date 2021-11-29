@@ -8,7 +8,6 @@ import IconButton from "@mui/material/IconButton";
 import InputAdornment from "@mui/material/InputAdornment";
 import SearchIcon from "@mui/icons-material/Search";
 import RefreshIcon from "@mui/icons-material/Refresh";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
 import ViewAgendaOutlinedIcon from "@mui/icons-material/ViewAgendaOutlined";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import AppsOutlinedIcon from "@mui/icons-material/AppsOutlined";
@@ -17,62 +16,37 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { setFilteredNotes } from "../actions/noteActions";
 import { listView } from "../actions/noteActions";
-import SplitscreenOutlinedIcon from "@mui/icons-material/SplitscreenOutlined";
 import GridViewIcon from "@mui/icons-material/GridView";
+import { Popover, Button} from "@mui/material";
+import 'reactjs-popup/dist/index.css';
+import { Redirect } from "react-router";
 
-// const customTextField = createTheme({
-//   components: {
-//     styleOverrides: {
-//       MuiOutlinedInput: {
-//         contained: {
-//           borderRadius: "30",
-//           border: "4px solid red",
-//         },
-//         root: {
-//           borderRadius: "30",
-//           border: "4px solid red",
-//         },
-//       },
-//       MuiInputBase: {
-//         root: {
-//           borderRadius: "30",
-//           border: "4px solid red",
-//         },
-//         formControl: {
-//           borderRadius: "30",
-//           border: "4px solid red",
-//         },
-//       },
-//       MuiTextField: {
-//         contained: {
-//           borderRadius: "30",
-//           border: "4px solid red",
-//         },
-//         root: {
-//           borderRadius: "30",
-//           border: "4px solid red",
-//         },
-//       },
-//       MuiFormControl: {
-//         fullWidth: {
-//           borderRadius: "30",
-//           border: "4px solid red",
-//         },
-//         root: {
-//           borderRadius: "30",
-//           border: "4px solid red",
-//         },
-//       },
-//     },
-//   },
-// });
 
 export const Appbar = ({ handleDrawerOpen }) => {
   const [search, setSearch] = useState("");
+  const [logout, setLogout] = useState(false);
   const myNotes = useSelector((state) => state.allNotes.notes);
   const dispatch = useDispatch();
   const list = useSelector((state) => state.allNotes.listView);
+  const title = useSelector((state) => state.allNotes.title);
+  const [anchorEl, setAnchorEl] = useState(null);
 
+  let emailAvatar = localStorage.getItem("emailAvatar");
+
+  const handlePopClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handlePopClose = () => {
+    setAnchorEl(null);
+  };
+
+  const open = Boolean(anchorEl);
+  const handleLogout = () => {
+    localStorage.removeItem("emailAvatar");
+    localStorage.removeItem("token");
+    setLogout(true);
+  };
   const handleSearch = (searchValue) => {
     setSearch(searchValue);
   };
@@ -123,7 +97,7 @@ export const Appbar = ({ handleDrawerOpen }) => {
       </Grid>
 
       <Grid item xs padding="0px 30px 0px 0px">
-        <span className="fundooNotesFont">FundooNotes</span>
+        <span className="fundooNotesFont">{title}</span>
       </Grid>
 
       <Grid item xs={6} padding="0 5% 0 0">
@@ -195,14 +169,27 @@ export const Appbar = ({ handleDrawerOpen }) => {
           </IconButton>
         </Grid>
         <Grid item>
-          <IconButton>
-            <Avatar name="Tushar" size="32" round={true} />
+          <IconButton onClick={handlePopClick}>
+            <Avatar name={emailAvatar} size="32" round={true} />
           </IconButton>
+          {/* {logOut && <Popup trigger={<button>LogOut</button>} position="right center">
+    <div>Popup content here !!</div>
+  </Popup>} */}
         </Grid>
         </div>
       </Grid>
-
-      {/* </ThemeProvider> */}
+      <Popover
+            open={open}
+            anchorEl={anchorEl}
+            onClose={handlePopClose}
+            anchorOrigin={{
+              vertical: "bottom",
+              horizontal: "left",
+            }}
+          >
+            <Button onClick={handleLogout}>Logout</Button>
+          </Popover>
+          {logout ? <Redirect to="/login" /> : null}
     </Grid>
   );
 };

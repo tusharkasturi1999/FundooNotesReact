@@ -70,6 +70,9 @@ import ArchiveOutlinedIcon from "@mui/icons-material/ArchiveOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import { ListItem } from "@mui/material";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setTitle } from "../actions/noteActions";
+
 const ListItems = styled(ListItem)`
   &:hover {
     background-color: #E6E8E6;
@@ -143,6 +146,10 @@ const Drawer = styled(MuiDrawer, {
 
 
 const SideBar = ({ open, handleDrawerHover, handleDrawerHoverLeave }) => {
+  const dispatch = useDispatch();
+  const handleTitle = (title) => {
+    dispatch(setTitle(title));
+  };
   return (
     <Drawer
       variant="permanent"
@@ -152,13 +159,13 @@ const SideBar = ({ open, handleDrawerHover, handleDrawerHoverLeave }) => {
     >
       {/* <DrawerHeader /> */}
       <List>
-        <ListItems button component={Link} to="/Dashboard">
+        <ListItems button onClick={() => handleTitle("Notes")}>
           <ListItemIcon>
             <LightbulbOutlinedIcon />
           </ListItemIcon>
           <ListItemText primary="Notes" />
         </ListItems>
-        <ListItems button>
+        <ListItems button onClick={() => handleTitle("Reminders")}>
           <ListItemIcon>
           <NotificationsNoneOutlinedIcon/>
           </ListItemIcon>
@@ -170,19 +177,19 @@ const SideBar = ({ open, handleDrawerHover, handleDrawerHoverLeave }) => {
           </ListItemIcon>
           <ListItemText primary="Label" />
         </ListItems> */}
-        <ListItems button>
+        <ListItems button onClick={() => handleTitle("Label")}>
           <ListItemIcon>
             <EditOutlinedIcon />
           </ListItemIcon>
           <ListItemText primary="Edit labels" />
         </ListItems>
-        <ListItems button>
+        <ListItems button onClick={() => handleTitle("Archive")}>
           <ListItemIcon>
             <ArchiveOutlinedIcon />
           </ListItemIcon>
           <ListItemText primary="Archive" />
         </ListItems>
-        <ListItems  button component={Link} to="/trash">
+        <ListItems  button button onClick={() => handleTitle("Trash")}>
           <ListItemIcon>
             <DeleteOutlineOutlinedIcon />
           </ListItemIcon>

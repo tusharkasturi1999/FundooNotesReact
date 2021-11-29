@@ -48,8 +48,9 @@ export default function Login() {
       Login1.handleAxiosLogin(dataslogin).then((response) => {
         console.log(response.data);
         if (response.data.status === 200) {
-          alert("Log In Successfull");
+          // alert("Log In Successfull");
           localStorage.setItem("token", response.data.message.Token);
+          localStorage.setItem("emailAvatar",email);
           setSuccess(true);
         }
         if (response.data.status !== 200) alert(response.data.message);
@@ -100,6 +101,7 @@ export default function Login() {
               >
                 <TextField
                   // helperText="You can enter letters, numbers and periods"
+                  name="emailIdBoxLogin"
                   required
                   className="emailIdBox"
                   fullWidth
@@ -121,6 +123,7 @@ export default function Login() {
                       Password
                     </InputLabel>
                     <OutlinedInput
+                      name="firstPasswordBoxLogin"
                       className="firstPasswordBox"
                       type={showPassword ? "text" : "password"}
                       // value={values.password}
@@ -174,14 +177,14 @@ export default function Login() {
                 </div>
                 <div className="signInSignUp">
                   <div className="signIn">
-                    <a href="/createAccount" textDecoration="none">
-                      <span variant="text" to="/createAccount">
+                    <a href="/" textDecoration="none">
+                      <span variant="text" to="/">
                         Create account
                       </span>
                     </a>
                   </div>
                   <div className="signUp">
-                    <Button variant="contained" type="submit">
+                    <Button variant="contained" type="submit" id="signIn">
                       Sign in
                     </Button>
                   </div>

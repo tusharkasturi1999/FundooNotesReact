@@ -13,6 +13,7 @@ import IconButton from "@mui/material/IconButton";
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import OutlinedInput from "@mui/material/OutlinedInput";
+import { Redirect } from "react-router";
 import {
   validPassword,
   validEmail,
@@ -34,6 +35,7 @@ export default function Registration() {
   const [confirmPasswordError, setPasswordConfirmError] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [success, setSuccess] = useState(false);
 
   let FN = firstName;
   let LN = lastName;
@@ -78,7 +80,14 @@ export default function Registration() {
       flag = true;
     }
     if (flag !== true) {
-      createLogin.handleAxiosPost(datas);
+      createLogin.handleAxiosPost(datas).then((response) => {
+        console.log(response.data);
+        if (response.data.status === 200) {
+          // alert("Account Creation Successfull");
+          setSuccess(true);
+        }
+        else if (response.data.status === 500) alert(response.data.message);
+      });;
     }
   };
 
@@ -130,6 +139,7 @@ export default function Registration() {
                   <div className="firstName">
                     <TextField
                       required
+                      name="firstNameBox"
                       className="firstNameBox"
                       label="First name"
                       variant="outlined"
@@ -142,6 +152,7 @@ export default function Registration() {
                   <div className="lastName">
                     <TextField
                       required
+                      name="lastNameBox"
                       className="lastNameBox"
                       label="Last name"
                       variant="outlined"
@@ -156,6 +167,7 @@ export default function Registration() {
                   <TextField
                     // helperText="You can enter letters, numbers and periods"
                     required
+                    name="emailIdBox"
                     className="emailIdBox"
                     fullWidth
                     label="Email Id"
@@ -175,10 +187,11 @@ export default function Registration() {
                 <div className="password">
                   <div className="firstPassword">
                     <FormControl variant="outlined" size="small">
-                      <InputLabel htmlFor="outlined-adornment-password">
+                      <InputLabel htmlFor="outlined-adornment-password" >
                         Password
                       </InputLabel>
                       <OutlinedInput
+                        name="firstPasswordBox"
                         className="firstPasswordBox"
                         type={showPassword ? "text" : "password"}
                         // value={values.password}
@@ -210,6 +223,7 @@ export default function Registration() {
                         Confirm
                       </InputLabel>
                       <OutlinedInput
+                        name="confirmBox"
                         className="confirmBox"
                         type={showConfirmPassword ? "text" : "password"}
                         // value={values.confirmPassword}
@@ -261,12 +275,12 @@ export default function Registration() {
                 </div>
                 <div className="signInSignUp">
                   <div className="signIn">
-                    <a href="/" textDecoration="none">
+                    <a href="/login" textDecoration="none">
                       <span variant="text">Sign in instead</span>
                     </a>
                   </div>
                   <div className="signUp">
-                    <Button variant="contained" type="submit">
+                    <Button variant="contained" type="submit" id="signUp">
                       Sign Up
                     </Button>
                   </div>
@@ -285,6 +299,7 @@ export default function Registration() {
           </form>
         </div>
       </div>
+      {success ? <Redirect to="/login" /> : null}
     </div>
   );
 }

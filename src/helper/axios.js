@@ -24,17 +24,18 @@ const get = (requestObject) => {
 };
 
 const handleAxiosPost = (datas) => {
-  axios({
+  return axios({
     method: "post",
     url: "http://localhost:4000/user",
     data: datas,
   })
-    .then(function (response) {
+    .then((response) =>{
       console.log(response);
-      if (response.data.status === 200) alert("Log In Successfull");
-      if (response.data.status !== 200) alert(response.data.message);
+      // if (response.data.status === 200) alert("Log In Successfull");
+      // if (response.data.status !== 200) alert(response.data.message);
+      return response;
     })
-    .catch(function (error) {
+    .catch((error) =>{
       alert("Some Error, Try Again");
       console.log(error);
     });

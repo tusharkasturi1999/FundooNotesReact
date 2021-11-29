@@ -69,4 +69,6 @@ export const addTrashNote = (note) => {
     type: ActionTypes.ADD_TRASH_NOTE,
     payload: note,
   };
+
+  
 };
