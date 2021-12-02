@@ -69,8 +69,8 @@ export default function Forgot() {
                 </div>
                 <div className="signInSignUp">
                   <div className="signIn">
-                    <a href="/" textDecoration="none">
-                      <span variant="text" to="/">
+                    <a href="/login" textDecoration="none">
+                      <span variant="text" to="/login">
                         Create account
                       </span>
                     </a>

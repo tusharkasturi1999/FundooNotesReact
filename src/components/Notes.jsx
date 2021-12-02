@@ -7,6 +7,7 @@ import {
   IconButton,
   Snackbar,
   Button,
+  CardMedia
 } from "@mui/material";
 import React, { useState } from "react";
 import "../styles/dashboard.scss";
@@ -93,6 +94,7 @@ const Note = () => {
           return (
             <Grid item xs={12} md={listView ? 8 : 3} key={item._id}>
               <Card
+                style={{backgroundColor:item.noteColor}}
                 elevation={hover[index] ? 6 : 1}
                 onMouseEnter={() => {
                   setHover({ [index]: true });
@@ -106,6 +108,29 @@ const Note = () => {
                   <Typography sx={{ mb: 1.5 }} color="text.secondary">
                     {item.content}
                   </Typography>
+                </CardContent>
+                <CardContent onClick={() => handleUpdate(item, index)}>
+                  {item.image !== "" ? (
+                    <CardMedia
+                      component="img"
+                      image={`http://localhost:4000/images/${item.image}`}
+                      alt="dish"
+                      style={{ minHeight: "150px", maxHeight:"250px"}}
+                    />
+                  ) : null}
+
+                  {/* <Typography variant="h6" style={{ fontWeight: "bold" }}>
+                    {item.title}
+                  </Typography>
+                  <Typography
+                    style={{
+                      overflow: "hidden",
+                      height: item.image !==""?"3em":"12.5em",
+                    }}
+                    color="text.secondary"
+                  >
+                    {item.content}
+                  </Typography> */}
                 </CardContent>
                 {hover[index] ? (
                   <NoteFooter

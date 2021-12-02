@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { Button, InputBase,Dialog,DialogActions,DialogContent,DialogTitle } from "@mui/material";
+import {
+  Button,
+  InputBase,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+} from "@mui/material";
 import "../styles/dashboard.scss";
 import service from "../service/noteService";
 import { useDispatch } from "react-redux";
@@ -21,7 +28,9 @@ const Popup = (props) => {
       .then((res) => {
         if (res.data.status === 200) {
           console.log(res);
-          dispatch(updateNote({data:res.data.message,index:props.item.index}));
+          dispatch(
+            updateNote({ data: res.data.message, index: props.item.index })
+          );
         } else {
           console.log(res);
         }
@@ -38,7 +47,7 @@ const Popup = (props) => {
           onChange={(e) => setTitle(e.target.value)}
           inputProps={{
             style: {
-              height: "36px",
+              minHeight: "36px",
               width: "40vw",
               fontWeight: "bold",
               fontSize: "25px",
@@ -55,7 +64,7 @@ const Popup = (props) => {
           multiline={true}
           onChange={(e) => setContent(e.target.value)}
           inputProps={{
-            style: { height: "36px" },
+            style: { minHeight: "36px" },
           }}
         />
       </DialogContent>

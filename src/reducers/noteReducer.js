@@ -6,6 +6,7 @@ const initialState = {
   trash: [],
   title: "Notes",
   listView: false,
+  // emailFirst: ""
 };
 
 export const noteReducer = (state = initialState, { type, payload }) => {

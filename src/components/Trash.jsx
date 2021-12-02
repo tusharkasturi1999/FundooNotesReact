@@ -11,6 +11,8 @@ import {
   DialogActions,
   DialogContent,
   DialogContentText,
+  Tooltip,
+  CardMedia,
 } from "@mui/material";
 import React, { useState } from "react";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
@@ -121,7 +123,9 @@ const Trash = () => {
         color="inherit"
         onClick={handleCloseSnackBar}
       >
-        <CloseIcon fontSize="small" />
+        <Tooltip title="Close">
+          <CloseIcon fontSize="small" />
+        </Tooltip>
       </IconButton>
     </React.Fragment>
   );
@@ -129,7 +133,7 @@ const Trash = () => {
   return (
     <Box className="main-container">
       <Typography
-        style={{ fontStyle: "italic", marginBottom: "20px", fontSize: "17px" ,left:"0", Right:"0"}}
+        style={{ fontStyle: "italic", marginBottom: "20px", fontSize: "17px" }}
       >
         Notes in Trash are deleted after 7 days.
       </Typography>
@@ -138,6 +142,7 @@ const Trash = () => {
           return (
             <Grid item xs={12} md={listView ? 8 : 3} key={item._id}>
               <Card
+                style={{backgroundColor:item.noteColor}}
                 elevation={hover[index] ? 6 : 1}
                 onMouseEnter={() => {
                   setHover({ [index]: true });
@@ -147,8 +152,22 @@ const Trash = () => {
                 }}
               >
                 <CardContent>
+                  {item.image !== "" ? (
+                    <CardMedia
+                      component="img"
+                      image={`http://localhost:4000/images/${item.image}`}
+                      alt="dish"
+                      style={{ minHeight: "150px", maxHeight:"250px"}}
+                    />
+                  ) : null}
                   <Typography variant="h5">{item.title}</Typography>
-                  <Typography sx={{ mb: 1.5 }} color="text.secondary">
+                  <Typography
+                    style={{
+                      overflow: "hidden",
+                      height: "3em",
+                    }}
+                    color="text.secondary"
+                  >
                     {item.content}
                   </Typography>
                 </CardContent>
@@ -158,13 +177,17 @@ const Trash = () => {
                       size="small"
                       onClick={() => handleDilougOpen(item)}
                     >
-                      <DeleteForeverIcon />
+                      <Tooltip title="Delete forever">
+                        <DeleteForeverIcon />
+                      </Tooltip>
                     </IconButton>
                     <IconButton
                       size="small"
                       onClick={() => handleRestore(item)}
                     >
-                      <RestoreFromTrashIcon />
+                      <Tooltip title="Restore">
+                        <RestoreFromTrashIcon />
+                      </Tooltip>
                     </IconButton>
                   </div>
                 ) : (
