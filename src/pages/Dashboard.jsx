@@ -89,7 +89,7 @@ const Dashboard = () => {
           handleDrawerHoverLeave={handleDrawerHoverLeave}
         />
 
-        <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+        <Box component="main" sx={{ flexGrow: 1, p: 3 }} style={{paddingTop:"0"}}>
           {renderOption()}
         </Box>
       </Box>

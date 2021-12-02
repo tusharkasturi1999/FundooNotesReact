@@ -88,7 +88,7 @@ const Note = () => {
   };
 
   return (
-    <Box className="main-container">
+    <Box className="main-container" style={{paddingTop:"0"}} name="main-container">
       <Grid container spacing={4} justifyContent={listView ? "center" : null}>
         {myNotes.map((item, index) => {
           return (
@@ -105,11 +105,7 @@ const Note = () => {
               >
                 <CardContent onClick={() => handleUpdate(item, index)}>
                   <Typography variant="h5">{item.title}</Typography>
-                  <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                    {item.content}
-                  </Typography>
-                </CardContent>
-                <CardContent onClick={() => handleUpdate(item, index)}>
+                  <CardContent onClick={() => handleUpdate(item, index)}>
                   {item.image !== "" ? (
                     <CardMedia
                       component="img"
@@ -132,6 +128,11 @@ const Note = () => {
                     {item.content}
                   </Typography> */}
                 </CardContent>
+                  <Typography sx={{ mb: 1.5 }} color="text.secondary">
+                    {item.content}
+                  </Typography>
+                </CardContent>
+
                 {hover[index] ? (
                   <NoteFooter
                     item={item}
